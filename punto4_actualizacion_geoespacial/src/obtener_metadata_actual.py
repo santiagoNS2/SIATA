@@ -4,12 +4,12 @@ import requests
 from config import BASE_URL, API_TOKEN
 
 
-def obtener_geoespacial_actual(dataset_id: str) -> dict | None:
+def obtener_geoespacial_actual(dataset_id: int | str) -> dict | None:
     """
     Devuelve el bloque de metadatos geoespaciales actual (:latest).
     Si el dataset no tiene bloque 'geospatial', devuelve None.
     """
-    url = f"{BASE_URL}/api/datasets/{dataset_id}/versions/:latest/metadata/geospatial"
+    url = f"{BASE_URL}/datasets/{dataset_id}/versions/:latest/metadata/geospatial"
     headers = {"X-Dataverse-key": API_TOKEN}
 
     resp = requests.get(url, headers=headers, timeout=10)
@@ -19,4 +19,4 @@ def obtener_geoespacial_actual(dataset_id: str) -> dict | None:
         return None
 
     resp.raise_for_status()
-    return resp.json()["data"]
+    return resp.json().get("data")

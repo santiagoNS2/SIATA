@@ -7,11 +7,7 @@ from typing import Dict, Any
 def guardar_resumen_y_json(datos_por_sensor: Dict[str, Any],
                            carpeta_salida: str,
                            carpeta_sensores: str) -> None:
-    """
-    Genera:
-      - resumen_por_sensor.csv con estadísticas por sensor.
-      - archivos JSON por sensor en 'salida/sensores'.
-    """
+
     ruta_resumen = os.path.join(carpeta_salida, "resumen_por_sensor.csv")
 
     with open(ruta_resumen, mode="w", encoding="utf-8", newline="") as f:

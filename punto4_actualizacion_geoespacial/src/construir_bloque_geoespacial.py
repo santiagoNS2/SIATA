@@ -10,10 +10,12 @@ def _field_single_primitive(type_name: str, value):
 
 
 def _field_single_vocab(type_name: str, value: str):
+    # Para evitar problemas de vocabularios controlados raros,
+    # lo dejamos como "primitive" en vez de "controlledVocabulary".
     return {
         "typeName": type_name,
         "multiple": False,
-        "typeClass": "controlledVocabulary",
+        "typeClass": "primitive",
         "value": value,
     }
 
@@ -42,7 +44,7 @@ def construir_bloque_geoespacial(row: dict) -> dict:
     lon_left = float(row["longitude_left"])
     lon_right = float(row["longitude_right"])
 
-    # Dataverse espera una "bounding box": oeste, este, norte, sur
+    # Bounding box: oeste, este, sur, norte
     south = min(lat_left, lat_right)
     north = max(lat_left, lat_right)
     west = min(lon_left, lon_right)
@@ -51,43 +53,33 @@ def construir_bloque_geoespacial(row: dict) -> dict:
     geospatial_block = {
         "fields": [
             {
-                # Cobertura geográfica (país, departamento, ciudad)
+                # Cobertura geográfica básica
                 "typeName": "geographicCoverage",
                 "typeClass": "compound",
                 "multiple": True,
                 "value": [
                     {
-                        "country": {
-                            "typeName": "country",
-                            "typeClass": "controlledVocabulary",
-                            "multiple": False,
-                            "value": country
-                        },
-                        "state": {
-                            "typeName": "state",
-                            "typeClass": "primitive",
-                            "multiple": False,
-                            "value": state
-                        },
-                        "city": {
-                            "typeName": "city",
-                            "typeClass": "primitive",
-                            "multiple": False,
-                            "value": city
-                        }
-                        # Si quieres, podrías agregar "otherGeographicCoverage"
+                        "country": _field_single_vocab("country", country),
+                        "state": _field_single_primitive("state", state),
+                        "city": _field_single_primitive("city", city),
                     }
-                ]
+                ],
             },
             {
-                # Nivel de detalle geográfico (texto libre)
+                # Unidad geográfica (texto libre)
                 "typeName": "geographicUnit",
-                "typeClass": "primitive",
-                "multiple": False,
-                "value": "Municipio"
+                "typeClass": "compound",
+                "multiple": True,
+                "value": [
+                    {
+                        "geographicUnit": _field_single_primitive(
+                            "geographicUnit", "City"
+                        )
+                    }
+                ],
             },
             {
-                # Bounding box geográfica
+                # Bounding box: OESTE / ESTE / NORTE / SUR
                 "typeName": "geographicBoundingBox",
                 "typeClass": "compound",
                 "multiple": False,
@@ -97,29 +89,31 @@ def construir_bloque_geoespacial(row: dict) -> dict:
                             "typeName": "westLongitude",
                             "typeClass": "primitive",
                             "multiple": False,
-                            "value": west
+                            "value": west,
                         },
                         "eastLongitude": {
                             "typeName": "eastLongitude",
                             "typeClass": "primitive",
                             "multiple": False,
-                            "value": east
+                            "value": east,
                         },
-                        "northLongitude": {
-                            "typeName": "northLongitude",
+                        # ¡Ojo! Aquí estaba el error:
+                        # Debe ser northLatitude / southLatitude
+                        "northLatitude": {
+                            "typeName": "northLatitude",
                             "typeClass": "primitive",
                             "multiple": False,
-                            "value": north
+                            "value": north,
                         },
-                        "southLongitude": {
-                            "typeName": "southLongitude",
+                        "southLatitude": {
+                            "typeName": "southLatitude",
                             "typeClass": "primitive",
                             "multiple": False,
-                            "value": south
-                        }
+                            "value": south,
+                        },
                     }
-                ]
-            }
+                ],
+            },
         ]
     }
 

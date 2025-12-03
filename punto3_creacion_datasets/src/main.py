@@ -8,10 +8,7 @@ from crear_dataset_api import crear_dataset_en_dataverse
 
 
 def main() -> None:
-    """
-    Crea de forma masiva varios datasets en Dataverse usando una
-    plantilla de metadatos y registra el resultado en un archivo de log.
-    """
+  
     config = obtener_config_dataverse()
 
     if not config.get("api_token"):

@@ -4,10 +4,7 @@ from typing import Final
 
 
 def configurar_logger_creacion() -> logging.Logger:
-    """
-    Configura un logger que escribe en ../salida/logs/creacion_datasets.log
-    y lo devuelve.
-    """
+ 
     base_dir = os.path.dirname(__file__)
     logs_dir = os.path.abspath(os.path.join(base_dir, "..", "salida", "logs"))
     os.makedirs(logs_dir, exist_ok=True)

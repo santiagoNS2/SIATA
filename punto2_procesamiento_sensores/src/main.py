@@ -6,10 +6,6 @@ from guardar_resumen_y_json import guardar_resumen_y_json
 
 
 def main() -> None:
-    """
-    Punto de entrada principal del programa.
-    Orquesta la lectura, validación y generación de salidas.
-    """
     ruta_csv = leer_ruta_csv()
     print(f"Usando archivo CSV: {ruta_csv}")
 

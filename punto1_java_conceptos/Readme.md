@@ -17,13 +17,13 @@ Relación con Dataverse: Dataverse es una aplicación Jakarta EE y su entregable
 
 4. **¿Qué son las dependencias en JAVA?**
    
-Son simplemente librerías externas o módulos de código que no escribimos nosotros.
+Son simplemente librerías externas o módulos de código que no escribimos nosotros.dos formas más comunes de manejarlas son Maven  y Gradle.
 
 6. **¿Explique cómo interpretar una excepción Java Básica?**
 Una excepción es la forma en que Java grita que algo salió mal. Para entender qué pasó sin perderse, hay que mirar el Stack Trace (la lista de pasos del error) siguiendo este orden lógico:
 
-Mira la primera línea (El "Qué"): Ahí te dice el tipo de error (ej. NullPointerException = algo estaba vacío).
+Mirando la primera línea (El "Qué"): Ahí  dice el tipo de error.
 
-Busca el "Caused by" (La Raíz): Si el error es largo, baja hasta encontrar esto. Generalmente aquí está el problema real (ej. conexión rechazada).
+Buscando el "Caused by" (La Raíz): Si el error es largo, baja hasta encontrar esto. Generalmente aquí está el problema real (ej. conexión rechazada).
 
-Identifica tu código (El "Dónde"): Busca en la lista la línea que empiece con el nombre de nuestro paquete (ej. edu.harvard.iq.dataverse...). Esa línea te dice exactamente en qué parte del código explotó.
+Identificar en el código (El "Dónde"): Busca en la lista la línea que empiece con el nombre del paquete (ej. edu.harvard.iq.dataverse...). Esa línea  dice exactamente en qué parte del código explotó.

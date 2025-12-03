@@ -73,9 +73,9 @@ def main() -> None:
         # Aquí solo usamos el ID interno, porque actualizar_metadata_geoespacial
         # está implementada para trabajar con /api/datasets/editMetadata/{id}
         ok_update, msg_update = actualizar_metadata_geoespacial(
-            internal_id,          # 👈 usamos el ID interno (21, etc.)
+           persistent_id,          # 👈 usamos el ID interno (21, etc.)
             bloque_nuevo,
-            replace=True,
+            
 )
 
 

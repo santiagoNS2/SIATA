@@ -18,32 +18,109 @@ def _field_single_vocab(type_name: str, value: str):
     }
 
 
-def construir_bloque_geoespacial(fila: dict) -> dict:
+def construir_bloque_geoespacial(row: dict) -> dict:
     """
-    A partir de una fila del CSV construye el bloque de metadatos "geospatial"
-    en el formato que espera Dataverse.
+    Construye el bloque 'geospatial' para Dataverse a partir de una fila del CSV.
+
+    Espera columnas:
+      - country
+      - state
+      - city
+      - latitude_left
+      - latitude_right
+      - longitude_left
+      - longitude_right
     """
-    country = fila["country"].strip()
-    state = fila["state"].strip()
-    city = fila["city"].strip()
 
-    lat_left = float(fila["latitude_left"])
-    lat_right = float(fila["latitude_right"])
-    lon_left = float(fila["longitude_left"])
-    lon_right = float(fila["longitude_right"])
+    country = (row.get("country") or "").strip()
+    state = (row.get("state") or "").strip()
+    city = (row.get("city") or "").strip()
 
-    # Convención: left = west (mínimo long), right = east (máximo long)
-    #             lat_left = south, lat_right = north
-    return {
-        "displayName": "Geospatial Metadata",
-        "name": "geospatial",
+    # Coords como floats
+    lat_left = float(row["latitude_left"])
+    lat_right = float(row["latitude_right"])
+    lon_left = float(row["longitude_left"])
+    lon_right = float(row["longitude_right"])
+
+    # Dataverse espera una "bounding box": oeste, este, norte, sur
+    south = min(lat_left, lat_right)
+    north = max(lat_left, lat_right)
+    west = min(lon_left, lon_right)
+    east = max(lon_left, lon_right)
+
+    geospatial_block = {
         "fields": [
-            _field_single_vocab("country", country),
-            _field_single_primitive("state", state),
-            _field_single_primitive("city", city),
-            _field_single_primitive("westLongitude", lon_left),
-            _field_single_primitive("eastLongitude", lon_right),
-            _field_single_primitive("southLatitude", lat_left),
-            _field_single_primitive("northLatitude", lat_right),
-        ],
+            {
+                # Cobertura geográfica (país, departamento, ciudad)
+                "typeName": "geographicCoverage",
+                "typeClass": "compound",
+                "multiple": True,
+                "value": [
+                    {
+                        "country": {
+                            "typeName": "country",
+                            "typeClass": "controlledVocabulary",
+                            "multiple": False,
+                            "value": country
+                        },
+                        "state": {
+                            "typeName": "state",
+                            "typeClass": "primitive",
+                            "multiple": False,
+                            "value": state
+                        },
+                        "city": {
+                            "typeName": "city",
+                            "typeClass": "primitive",
+                            "multiple": False,
+                            "value": city
+                        }
+                        # Si quieres, podrías agregar "otherGeographicCoverage"
+                    }
+                ]
+            },
+            {
+                # Nivel de detalle geográfico (texto libre)
+                "typeName": "geographicUnit",
+                "typeClass": "primitive",
+                "multiple": False,
+                "value": "Municipio"
+            },
+            {
+                # Bounding box geográfica
+                "typeName": "geographicBoundingBox",
+                "typeClass": "compound",
+                "multiple": False,
+                "value": [
+                    {
+                        "westLongitude": {
+                            "typeName": "westLongitude",
+                            "typeClass": "primitive",
+                            "multiple": False,
+                            "value": west
+                        },
+                        "eastLongitude": {
+                            "typeName": "eastLongitude",
+                            "typeClass": "primitive",
+                            "multiple": False,
+                            "value": east
+                        },
+                        "northLongitude": {
+                            "typeName": "northLongitude",
+                            "typeClass": "primitive",
+                            "multiple": False,
+                            "value": north
+                        },
+                        "southLongitude": {
+                            "typeName": "southLongitude",
+                            "typeClass": "primitive",
+                            "multiple": False,
+                            "value": south
+                        }
+                    }
+                ]
+            }
+        ]
     }
+
+    return geospatial_block

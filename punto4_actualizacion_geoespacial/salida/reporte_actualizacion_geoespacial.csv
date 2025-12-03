@@ -1,2 +1,2 @@
 id_dataset,titulo,persistent_id,cambios_aplicados,nueva_version,estado_final
-13,Dataset SIATA prueba 02,,Error al actualizar: Error 500: {},,DRAFT
+13,Dataset SIATA prueba 02,,"Error al actualizar: Error 404: {""status"":""ERROR"",""code"":404,""message"":""API endpoint does not exist on this server. Please check your code for typos, or consult our API guide at http://guides.dataverse.org."",""requestUrl"":""http://pruebas.siata.gov.co/api/v1/datasets/editMetadata/13?replace=true&replace=true"",""requestMethod"":""PUT""}",,DRAFT

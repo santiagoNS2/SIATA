@@ -1,51 +1,62 @@
-# actualizar_metadata.py
-
+# actualizar_metadata_geoespacial.py
+import json
 import requests
-from typing import Optional, Dict, Any
-
 from config import BASE_URL, API_TOKEN
 
-
-def actualizar_metadata_geoespacial(
-    internal_id: str,
-    persistent_id: Optional[str],
-    bloque_geoespacial: Dict[str, Any],
-) -> tuple[bool, str]:
+def actualizar_metadata_geoespacial(dataset_id: int, bloque_geoespacial: dict, replace: bool = True):
     """
-    Actualiza el bloque geoespacial de un dataset.
+    Actualiza el bloque de metadatos geoespaciales de un dataset en Dataverse.
 
-    - Si hay persistentId (dataset ya tiene DOI), usa el endpoint con :persistentId.
-    - Si NO hay persistentId (dataset solo tiene ID interno), usa el endpoint por ID.
+    - Usa el endpoint nativo: /api/datasets/editMetadata/{id}
+    - Envía un JSON en formato 'datasetVersion' con el bloque 'geospatial'.
 
-    Retorna (ok, mensaje).
+    Parámetros:
+    -----------
+    dataset_id : int
+        ID interno del dataset en Dataverse (ej: 13).
+    bloque_geoespacial : dict
+        Diccionario con la estructura del bloque 'geospatial' (clave 'fields').
+    replace : bool
+        Si es True, reemplaza el bloque existente. Si es False, solo agrega.
     """
-    headers = {
-        "X-Dataverse-key": API_TOKEN,
-        "Content-Type": "application/json",
+
+    url = f"{BASE_URL}/api/datasets/editMetadata/{dataset_id}"
+    params = {
+        "replace": "true" if replace else "false"
     }
 
     payload = {
-        "metadataBlocks": {
-            "geospatial": bloque_geoespacial,
+        "datasetVersion": {
+            "metadataBlocks": {
+                "geospatial": bloque_geoespacial
+            }
         }
     }
 
-    # Caso 1: usar persistentId
-    if persistent_id:
-        url = (
-            f"{BASE_URL}/api/datasets/:persistentId/editMetadata"
-            f"?persistentId={persistent_id}&replace=true"
-        )
-    else:
-        # Caso 2: usar ID interno
-        url = (
-            f"{BASE_URL}/api/datasets/{internal_id}/editMetadata"
-            f"?replace=true"
-        )
+    headers = {
+        "X-Dataverse-key": API_TOKEN,
+        "Content-Type": "application/json"
+    }
 
-    resp = requests.put(url, headers=headers, json=payload, timeout=15)
+    try:
+        resp = requests.put(url, params=params,
+                            headers=headers,
+                            data=json.dumps(payload))
+    except requests.RequestException as e:
+        return False, f"Error de red al actualizar metadata: {e}"
 
     if resp.status_code != 200:
+        # Devuelvo texto del servidor para que lo veas en el reporte
         return False, f"Error {resp.status_code}: {resp.text}"
 
-    return True, "OK"
+    # Si todo salió bien, Dataverse responde con info de la versión
+    try:
+        data = resp.json().get("data", {})
+    except ValueError:
+        # No hay JSON válido, pero el status fue 200 → igual lo damos por OK
+        return True, {"version": "desconocida", "estado": "desconocido"}
+
+    version = data.get("versionNumber", "desconocida")
+    estado = data.get("versionState", "desconocido")
+
+    return True, {"version": version, "estado": estado}

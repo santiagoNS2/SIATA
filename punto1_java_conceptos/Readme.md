@@ -16,9 +16,10 @@ Un WAR (Web Application Archive) es un archivo comprimido (como un .ZIP) que con
 Relación con Dataverse: Dataverse es una aplicación Jakarta EE y su entregable principal es justamente un archivo .war. El proceso es simple: nosotros "cargamos" este archivo en un servidor de aplicaciones el servidor se encarga de descomprimirlo, leer las configs y poner la aplicación en línea para los usuarios.
 
 4. **¿Qué son las dependencias en JAVA?**
+   
 Son simplemente librerías externas o módulos de código que no escribimos nosotros.
 
-5. **¿Explique cómo interpretar una excepción Java Básica?**
+6. **¿Explique cómo interpretar una excepción Java Básica?**
 Una excepción es la forma en que Java grita que algo salió mal. Para entender qué pasó sin perderse, hay que mirar el Stack Trace (la lista de pasos del error) siguiendo este orden lógico:
 
 Mira la primera línea (El "Qué"): Ahí te dice el tipo de error (ej. NullPointerException = algo estaba vacío).

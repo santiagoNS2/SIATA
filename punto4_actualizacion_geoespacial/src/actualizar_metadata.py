@@ -5,7 +5,9 @@ from config import BASE_URL, API_TOKEN
 
 
 def actualizar_metadata_geoespacial(
-    persistent_id: str, bloque_geoespacial: dict, replace: bool = True
+    persistent_id: str,
+    bloque_geoespacial: dict,
+    replace: bool = True,
 ) -> tuple[bool, str | dict]:
     """
     Actualiza el bloque de metadatos geoespaciales de un dataset en Dataverse.
@@ -13,21 +15,9 @@ def actualizar_metadata_geoespacial(
     Usa el endpoint oficial:
       PUT {BASE_URL}/datasets/:persistentId/editMetadata
         ?persistentId=doi:...&replace=true|false
-
-    Parámetros:
-    -----------
-    persistent_id : str
-        El DOI del dataset, por ejemplo: "doi:10.5072/FK2/FU2RIP".
-    bloque_geoespacial : dict
-        Diccionario con la estructura del bloque 'geospatial' (con 'fields').
-    replace : bool
-        True → reemplaza el bloque existente.
-        False → agrega sin machacar lo que ya hay.
     """
 
-    # Endpoint nativo basado en persistentId
     url = f"{BASE_URL}/datasets/:persistentId/editMetadata"
-
     params = {
         "persistentId": persistent_id,
         "replace": "true" if replace else "false",
@@ -52,10 +42,15 @@ def actualizar_metadata_geoespacial(
             params=params,
             headers=headers,
             data=json.dumps(payload),
-            timeout=20,
+            timeout=15,
         )
     except requests.RequestException as e:
         return False, f"Error de red al actualizar metadata: {e}"
+
+    # DEBUG opcional: descomenta si necesitas ver qué se envía y qué responde el server
+    # print("URL:", resp.request.url)
+    # print("PAYLOAD:", resp.request.body)
+    # print("STATUS:", resp.status_code, "BODY:", resp.text)
 
     if resp.status_code != 200:
         return False, f"Error {resp.status_code}: {resp.text}"

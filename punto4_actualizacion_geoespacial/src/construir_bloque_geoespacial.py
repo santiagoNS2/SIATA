@@ -10,12 +10,11 @@ def _field_single_primitive(type_name: str, value):
 
 
 def _field_single_vocab(type_name: str, value: str):
-    # Para evitar problemas de vocabularios controlados raros,
-    # lo dejamos como "primitive" en vez de "controlledVocabulary".
+    # Para campos de vocabulario controlado como "country"
     return {
         "typeName": type_name,
         "multiple": False,
-        "typeClass": "primitive",
+        "typeClass": "controlledVocabulary",
         "value": value,
     }
 
@@ -38,7 +37,7 @@ def construir_bloque_geoespacial(row: dict) -> dict:
     state = (row.get("state") or "").strip()
     city = (row.get("city") or "").strip()
 
-    # Coords como floats
+    # Coordenadas como floats
     lat_left = float(row["latitude_left"])
     lat_right = float(row["latitude_right"])
     lon_left = float(row["longitude_left"])
@@ -51,9 +50,9 @@ def construir_bloque_geoespacial(row: dict) -> dict:
     east = max(lon_left, lon_right)
 
     geospatial_block = {
+        "displayName": "Geospatial Metadata",
         "fields": [
             {
-                # Cobertura geográfica básica
                 "typeName": "geographicCoverage",
                 "typeClass": "compound",
                 "multiple": True,
@@ -66,20 +65,6 @@ def construir_bloque_geoespacial(row: dict) -> dict:
                 ],
             },
             {
-                # Unidad geográfica (texto libre)
-                "typeName": "geographicUnit",
-                "typeClass": "compound",
-                "multiple": True,
-                "value": [
-                    {
-                        "geographicUnit": _field_single_primitive(
-                            "geographicUnit", "City"
-                        )
-                    }
-                ],
-            },
-            {
-                # Bounding box: OESTE / ESTE / NORTE / SUR
                 "typeName": "geographicBoundingBox",
                 "typeClass": "compound",
                 "multiple": False,
@@ -97,8 +82,6 @@ def construir_bloque_geoespacial(row: dict) -> dict:
                             "multiple": False,
                             "value": east,
                         },
-                        # ¡Ojo! Aquí estaba el error:
-                        # Debe ser northLatitude / southLatitude
                         "northLatitude": {
                             "typeName": "northLatitude",
                             "typeClass": "primitive",
@@ -114,7 +97,7 @@ def construir_bloque_geoespacial(row: dict) -> dict:
                     }
                 ],
             },
-        ]
+        ],
     }
 
     return geospatial_block

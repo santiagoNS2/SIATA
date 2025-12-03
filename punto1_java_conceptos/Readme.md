@@ -1,4 +1,5 @@
 1. ¿Qué es la JVM y por qué es importante para correr aplicaciones como Dataverse?
+   
 La JVM (Java Virtual Machine) es básicamente el motor de traducción. Su trabajo es coger el código Java y traducirlo al lenguaje de máquina específico del servidor donde estemos (ya sea Linux, Windows o Mac).
 
 Importancia para Dataverse: La clave aquí es la portabilidad. Gracias a la JVM, podemos desarrollar Dataverse una sola vez y desplegarlo en cualquier servidor con diferente sistema operativo sin tener que reescribir ni una línea de código. "Write once, run anywhere".

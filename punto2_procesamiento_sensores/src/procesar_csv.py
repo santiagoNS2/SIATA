@@ -7,12 +7,8 @@ from validar_fila import validar_fila
 
 def procesar_csv(ruta_csv: str) -> Tuple[Dict[str, Any], List[dict]]:
     """
-    Lee el CSV, separa filas válidas y con error,
-    agrupa por sensor y prepara datos para estadísticas.
-
-    Retorna:
-        datos_por_sensor: diccionario con la info agrupada por sensor_id.
-        errores: lista de filas con errores, incluyendo la descripción del error.
+    Leeel CSv, separa fillas validas y con error,
+    agrupa por sensor y prepara datpos para estadísticas.
     """
     if not os.path.exists(ruta_csv):
         raise FileNotFoundError(f"No se encontró el archivo: {ruta_csv}")

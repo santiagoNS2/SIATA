@@ -10,7 +10,7 @@ def _field_single_primitive(type_name: str, value):
 
 
 def _field_single_vocab(type_name: str, value: str):
-    # Para campos de vocabulario controlado como "country"
+    # country es vocabulario controlado en Dataverse
     return {
         "typeName": type_name,
         "multiple": False,
@@ -43,16 +43,18 @@ def construir_bloque_geoespacial(row: dict) -> dict:
     lon_left = float(row["longitude_left"])
     lon_right = float(row["longitude_right"])
 
-    # Bounding box: oeste, este, sur, norte
+    # Bounding box: sur/norte, oeste/este
     south = min(lat_left, lat_right)
     north = max(lat_left, lat_right)
     west = min(lon_left, lon_right)
     east = max(lon_left, lon_right)
 
     geospatial_block = {
+        # displayName es opcional, pero no molesta
         "displayName": "Geospatial Metadata",
         "fields": [
             {
+                # Cobertura geográfica (país, estado, ciudad)
                 "typeName": "geographicCoverage",
                 "typeClass": "compound",
                 "multiple": True,
@@ -65,6 +67,7 @@ def construir_bloque_geoespacial(row: dict) -> dict:
                 ],
             },
             {
+                # Bounding box; OJO: value debe ser una LISTA de un objeto
                 "typeName": "geographicBoundingBox",
                 "typeClass": "compound",
                 "multiple": False,

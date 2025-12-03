@@ -21,10 +21,15 @@ Trazabilidad y Errores: Se priorizó el manejo explícito de errores y la genera
 
 SIATA/
 ├─ punto1_java_conceptos/     # Conceptos de Java y Diagrama de Arquitectura.
+
 ├─ punto2_procesamiento_csv/      # Procesamiento y validación de datos de sensores.
+
 ├─ punto3_creacion_datasets/      # Creación masiva de datasets vía API.
+
 ├─ punto4_actualizacion_geoespacial/ # Actualización de metadatos geoespaciales (Desafío principal).
+
 ├─ punto5_descarga_datasets/      # Descarga de archivos y guía para usuario no técnico.
+
 └─ README_resumen.md              # Este archivo.
 
 

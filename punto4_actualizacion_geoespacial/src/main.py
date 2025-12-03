@@ -39,18 +39,21 @@ def main() -> None:
             continue
 
         # A partir de aquí ya sabemos que el dataset existe
-        internal_id = info_inicial["id"]
+        internal_id_str = info_inicial["id"]
+        internal_id = int(internal_id_str)  # aseguramos que sea int
         persistent_id = info_inicial["persistent_id"]
 
         print(
             f"[{dataset_id_csv}] Encontrado dataset interno ID={internal_id}, PID={persistent_id}"
         )
 
+        # Construimos el nuevo bloque geoespacial a partir de la fila del CSV
         bloque_nuevo = construir_bloque_geoespacial(fila)
 
-        # Usamos el ID interno para consultas posteriores
+        # Obtenemos el bloque geoespacial actual usando el ID interno
         bloque_actual = obtener_geoespacial_actual(internal_id)
 
+        # Si no hay cambios, no actualizamos ni publicamos
         if not hay_cambios_geoespaciales(bloque_actual, bloque_nuevo):
             print(
                 f"[{dataset_id_csv}] Sin cambios geoespaciales, no se actualiza ni publica."
@@ -67,12 +70,13 @@ def main() -> None:
             )
             continue
 
+        # Aquí solo usamos el ID interno, porque actualizar_metadata_geoespacial
+        # está implementada para trabajar con /api/datasets/editMetadata/{id}
         ok_update, msg_update = actualizar_metadata_geoespacial(
-        internal_id,  # ID interno (21, 22, etc.)
-        persistent_id,  # Puede ser None si aún no hay DOI
-        bloque_nuevo,
-    )
-
+            internal_id,  # ID interno (13, 14, etc.)
+            bloque_nuevo,
+            replace=True,
+        )
 
         if not ok_update:
             print(

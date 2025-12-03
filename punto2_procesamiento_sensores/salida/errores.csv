@@ -1,0 +1,11 @@
+sensor_id,timestamp,valor,unidad,error
+S_ERR1,,,°,Campos faltantes en la fila (línea 42)
+,2025-11-30 10:50:00,25.0,°C,Campos faltantes en la fila (línea 43)
+S_ERR2,2025-11-30 10:55:00,abc,°C,Valor no numérico: 'abc' (línea 44)
+S_ERR3,2025/11/30 11:00:00,25.0,°C,Timestamp inválido: '2025/11/30 11:00:00' (línea 45)
+S_ERR4,2025-11-30 11:05:00,,°C,Campos faltantes en la fila (línea 46)
+S_ERR5,2025-11-30 11:10:00,25.0,,Campos faltantes en la fila (línea 47)
+S_ERR6, , , ,Campos faltantes en la fila (línea 48)
+,,, ,Fila vacía (línea 49)
+S_ERR7,2025-11-30 11:20:00, ,°C,Campos faltantes en la fila (línea 50)
+S_ERR8,,,,Campos faltantes en la fila (línea 51)

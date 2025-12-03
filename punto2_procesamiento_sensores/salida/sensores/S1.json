@@ -1,0 +1,50 @@
+{
+  "sensor_id": "S1",
+  "registros": [
+    {
+      "timestamp": "2025-11-30 10:05:00",
+      "valor": 20.89,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 10:10:00",
+      "valor": 22.39,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 10:25:00",
+      "valor": 21.47,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 11:20:00",
+      "valor": 22.86,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 11:25:00",
+      "valor": 22.03,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 11:50:00",
+      "valor": 29.74,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 12:05:00",
+      "valor": 20.17,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 12:55:00",
+      "valor": 20.84,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 13:10:00",
+      "valor": 23.07,
+      "unidad": "°C"
+    }
+  ]
+}

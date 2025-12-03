@@ -1,0 +1,81 @@
+{
+  "datasetVersion": {
+    "metadataBlocks": {
+      "citation": {
+        "fields": [
+          {
+            "typeName": "title",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "TITULO_PLACEHOLDER"
+          },
+          {
+            "typeName": "author",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "authorName": {
+                  "typeName": "authorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "santiago naranjo sanchez"
+                },
+                "authorAffiliation": {
+                  "typeName": "authorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "SIATA"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "datasetContact",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "datasetContactName": {
+                  "typeName": "datasetContactName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "santiago"
+                },
+                "datasetContactEmail": {
+                  "typeName": "datasetContactEmail",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "naranjosanti2@gmail.com"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "dsDescription",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "dsDescriptionValue": {
+                  "typeName": "dsDescriptionValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Descripción corta del dataset de la prueba técnica SIATA."
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "subject",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "Other"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

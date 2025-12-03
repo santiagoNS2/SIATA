@@ -1,0 +1,35 @@
+{
+  "sensor_id": "S8",
+  "registros": [
+    {
+      "timestamp": "2025-11-30 10:40:00",
+      "valor": 23.0,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 10:50:00",
+      "valor": 20.89,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 11:10:00",
+      "valor": 29.79,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 11:40:00",
+      "valor": 23.07,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 12:40:00",
+      "valor": 28.74,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 13:15:00",
+      "valor": 20.68,
+      "unidad": "°C"
+    }
+  ]
+}

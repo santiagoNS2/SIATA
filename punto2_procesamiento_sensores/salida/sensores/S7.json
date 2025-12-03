@@ -1,0 +1,15 @@
+{
+  "sensor_id": "S7",
+  "registros": [
+    {
+      "timestamp": "2025-11-30 11:00:00",
+      "valor": 25.26,
+      "unidad": "°C"
+    },
+    {
+      "timestamp": "2025-11-30 11:05:00",
+      "valor": 23.38,
+      "unidad": "°C"
+    }
+  ]
+}
